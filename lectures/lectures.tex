@@ -528,10 +528,10 @@ Typical situations for approximation
 \begin{itemize}
     \item Stirling formula: $\displaystyle n! = \sqrt{2\pi n}\left({n\over e}\right)^n\left(1+{1\over 12n}+{1\over 288n^2}+O(n^{-3})\right)$
     \item harmonic numbers: $H_n = \ln n + \gamma + {1\over 2n} - {1\over 12n^2} + O(n^{-4})$ 
-    \item rational functions, e.g. ${n\over n+2} = {1\over 1+{2\over n}} = 1-{2\over n}+{4\over n^2}+O(n^{-3})$
+    \item rational functions, e.g. ${n+1\over n+2} = {1+{1\over n}\over 1+{2\over n}} = \left(1+{1\over n}\right)\left(1-{2\over n}+{4\over n^2}+O(n^{-3})\right)=1-{1\over n}+{2\over n^2}+O(n^{-3})$
     \item exponentials: $e^{H_n}=ne^\gamma e^{O(1/n)}=ne^\gamma (1+O(1/n))=ne^\gamma + O(1)$
     \item rational function powered to $n$, e.g.
-            $$\left(1-{1\over n}\right)^n=e^{n\ln \left(1-{1\over n}\right)}= \exp\left(n\left({-1\over n}+O\left(n^{-2}\right)\right)\right) = e^{-1 + O(n^{-1}))} = {1\over e} + O(n^{-1})$$
+            $$\left({n-3\over n}\right)^n=e^{n\ln \left(1-{3\over n}\right)}= \exp\left(n\left({-3\over n}+O\left(n^{-2}\right)\right)\right) = e^{-3 + O(n^{-1}))} = {1\over e^3} + O(n^{-1})$$
     \item binomial coefficient, e.g. $2n\choose n$: factorials and Stirling formula
             \begin{eqnarray*}
                 {2n\choose n}={\sqrt{4\pi n}\left({2n\over e}\right)^{2n}(1+O(n^{-1}))\over 2\pi n\left({n\over e}\right)^{2n}(1+O(n^{-1}))^2}=
