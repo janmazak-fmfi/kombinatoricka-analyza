@@ -17,15 +17,10 @@
 \addtolength{\hoffset}{-2cm}
 \addtolength{\textwidth}{4 cm}
 \addtolength{\textheight}{5 cm}
-\usepackage{array}
+\parindent = 0pt
+
 
 \linespread{1.2}
-
-% fonty pre text a matematiku
-%\usepackage{newcent}
-%\usepackage{euler}
-\usepackage{amsmath}
-
 
 % AMS-TeX
 \usepackage{amsmath}
@@ -34,12 +29,23 @@
 \usepackage{multicol}
 \usepackage{amsthm}
 
+\usepackage{array}
+\usepackage{enumitem}
+
 \newcommand*\ruleline[1]{\par\noindent\raisebox{.8ex}{\makebox[\linewidth]{\hrulefill\hspace{1ex}\raisebox{-.8ex}{#1}\hspace{1ex}\hrulefill}}}
+
+\def\U{{\bf U:\ }}
+\def\DU{{\bf DU:\ }}
+\def\ries{\par\noindent
+{\bf Solution:\ }}
+\def\remark{\emph{Remark:\ }}
 
 \def\ans#1{\big[\hskip 2mm {#1}\hskip 2mm\big]}
 \def\ogf{\overset{{\rm ogf}}{\longleftrightarrow}}
 \def\xD{x{\rm D}}
 \def\D{{\rm D}}
+
+\def\Z{\mathbb Z}
 
 \begin{document}
 \selectlanguage{slovak}
@@ -50,12 +56,13 @@
 
 
 \section{Basics of generating functions}
-\begin{itemize}
-\item 
-Introduction [Wilf 1--3]:
+
+\ruleline{Introduction [Wilf 1--3]}
+
 \begin{itemize}
     %\setlength\itemsep{.2em}
-    \item how to define a sequence: exact formula, recurrent relation (Fibonacci), algorithm (the sequence of primes); there are uncomputable sequences (programs that do not stop)
+    \item how to define a sequence: exact formula, recurrent relation (Fibonacci), algorithm (the sequence of primes);
+        there are uncomputable sequences (e.g. a list of programs that stop)
     \item a new way: power series (members of the sequence as coefficients in the series)
     \item advantages: many advanced tools from analytical theory of functions
     \item very powerful: works on many sequences where nothing else is known to work
@@ -64,15 +71,18 @@ Introduction [Wilf 1--3]:
     \item ``Konečne vidím, že je tá matalýza aj na niečo dobrá. Keby mi to bol niekto predtým povedal\dots''
 \end{itemize}
 
-\item 
-Two examples [Wilf 3--7]:
-\begin{itemize}
-    \item $a_{n+1} = 2a_n + 1$ for $n\ge 0$, $a_0 = 0$
+\ruleline{First-order linear recurrences [Wilf 3--7]}
+
+\U $a_{n+1} = 2a_n + 1$ for $n\ge 0$, $a_0 = 0$
+\begin{itemize}[label=--]
     \item write few members, guess $a_n = 2^n-1$, provable by induction
     \item multiply by $x^n$, sum over all $n$, assign gf: $\displaystyle \qquad{A(x)\over x}=2A(x)+{1\over 1-x}$
     \item partial fraction expansion: $\displaystyle \qquad A(x)={x\over (1-x)(1-2x)}={1\over 1-2x}-{1\over 1-x}$
     \item the method stays basically the same for harder problems
-    \item $a_{n+1}=2a_n+n$ for $n\ge 0$, $a_0=1$
+\end{itemize}
+
+\U $a_{n+1}=2a_n+n$ for $n\ge 0$, $a_0=1$
+\begin{itemize}[label=--]
     \item exact formula not obvious; no unqualified variables in the recurrence
     \item obstacle: $\sum_{n\ge 0} nx^n = x/(1-x)^2$; solution: differentiation
     \item concern: is differentiation allowed? discussed later, but in principle yes:
@@ -82,32 +92,35 @@ Two examples [Wilf 3--7]:
     \item $a_n=2^{n+1}-n-1$
 \end{itemize}
 
-\item 
 The method [Wilf 8]:
-\begin{itemize}
-    \item 1. make sure variables in the recurrence are qualified (e.g. range for $n$)
-    \item 2. name and define the gf
-    \item 3. multiply by $x^n$, sum over all $n$ in the range
-    \item 4. express both sides in terms of the gf
-    \item 5. solve the equation for gf
-    \item 6. calculate coefficients of gf power series expansion
-    \item useful notation: $[x^n]f(x)$; e.g. $$[x^n]e^x=1/n!\qquad [t^r]{1\over 1-3t}=3^r\qquad [v^m](1+v)^s={s\choose m}$$         
-\end{itemize}
+\begin{enumerate}
+    \item Make sure variables in the recurrence are qualified (e.g. range for $n$).
+    \item Name and define the gf.
+    \item Multiply by $x^n$, sum over all $n$ in the range.
+    \item Express both sides in terms of the gf.
+    \item Solve the equation for the gf.
+    \item Calculate coefficients in the gf power series expansion.
+\end{enumerate}
 
-\item
-Solve $a_n=5a_{n-1}-6a_{n-2}$ for $n\ge 2$, $a_0 = 0$, $a_1=1$. \ans{$G(x) = {x\over (1-2x)(1-3x)}$; $a_n = 3^n-2^n$}
+Useful notation: $[x^n]f(x)$; e.g.
+$$
+    [x^n]e^x=1/n!\qquad [t^r]{1\over 1-3t}=3^r\qquad [v^m](1+v)^s={s\choose m}
+$$
 
-\item 
-Fibonacci [Wilf 8--10]:
+\U Solve $a_n=5a_{n-1}-6a_{n-2}$ for $n\ge 2$, $a_0 = 0$, $a_1=1$. \ans{$G(x) = {x\over (1-2x)(1-3x)}$; $a_n = 3^n-2^n$}
+
+\ruleline{The Fibonacci sequence [Wilf 8--10]}
+
 \begin{itemize}
     \item three-term recurrence: $F_{n+1}=F_n+F_{n-1}$ for $n\ge 1$, $F_0=0$, $F_1=1$.
     \item apply the method ($r_\pm = (1\pm \sqrt 5)/2$): $$\displaystyle F(x) = {x\over 1-x-x^2} = {x\over (1-xr_{+})(1-xr_{-})}={1\over r_{+}-r_{-}}\left({1\over 1-xr_{+}}-{1\over 1-xr_{-}}\right)$$
     \item $F_n={1\over \sqrt 5}(r_{+}^n-r_{-}^n)$
     \item the second term is ${} < 1$ and goes to zero, so the first term ${1\over \sqrt 5}({1+\sqrt 5\over 2})^n$ gives a good approximation
 \end{itemize}
-    
-\item
-Find ogf for the following sequences (always $n\ge 0$) [W1.1]:
+
+\ruleline{Exercises}
+
+\U Find ogf for the following sequences (always $n\ge 0$) [W1.1]:
 
 \setlength\extrarowheight{1mm}
 \begin{tabular}{cl@{\hskip 5mm}l}
@@ -121,7 +134,7 @@ Find ogf for the following sequences (always $n\ge 0$) [W1.1]:
     (h) & $a_n = (-1)^n$ & \ans{$1/(1+x)$}\\
 \end{tabular}
 
-\item 
+\U
 Find the following coefficients [W1.5]:
 \begin{center}
 \setlength\extrarowheight{1mm}
@@ -135,7 +148,11 @@ Find the following coefficients [W1.5]:
 \end{tabular}
 \end{center}
 
-\item
+\U
+Find the sequence with gf $1/(1-x)^2$.
+\ans{Differentiate $1/(1-x)$ and divide by $x$, which corresponds to an index shift by $1$.}
+
+\U
 Compute $\square_n = \sum_{k=1}^n k^2$.
 \begin{itemize}
     \item assign ogf to the sequence $1^2, 2^2, \dots, n^2$: $f(x) = \sum_{k=1}^n{k^2x^k}$
@@ -143,13 +160,12 @@ Compute $\square_n = \sum_{k=1}^n k^2$.
     \item note that $\square_n = f(1) = \lim_{x\to 1} (xD)^2 [(x^{n+1}-1)/(x-1)]=n(n+1)(2n+1)/6$
 \end{itemize}
 
-\item
-Find the sequence with gf $1/(1-x)^3$.
+\DU
+Find a linear recurrence of second order (going back two sequence members)
+that has a solution that contains $n\cdot 3^n$
+(possibly plus some linear combination of other exponential or polynomial factors).
 
-\item
-Find a linear recurrence going back two sequence members that has a solution that contains $n\cdot 3^n$ (possibly plus some linear combination of other exponential or polynomial factors).
-
-\item
+\DU
 Find explicit formulas for the following sequences [W1.6, R2, R3, R7]:
 
 \setlength\extrarowheight{1mm}
@@ -167,28 +183,22 @@ Find explicit formulas for the following sequences [W1.6, R2, R3, R7]:
     (k) & $a_n = -3a_{n-1}+a_{n-2}+3a_{n-3}$ for $n\ge 3$; $a_0=20$, $a_1=-36$, $a_2=60$ \hspace*{-2cm} & \hspace*{2cm} \ans{$5(-3)^n+18(-1)^n-3$}\\
 \end{tabular}
 
-\end{itemize}
-
-\newpage
-
-
 
 \section{Ordinary generating functions}
 % 2. prednaska
 
-\begin{itemize}
-
-\item From the homework: solve $a_n = 2a_{n-1}-a_{n-2}-2$ for $n\ge 1$; $a_0=a_{10}=0$.\\
+\U From the homework: solve $a_n = 2a_{n-1}-a_{n-2}-2$ for $n\ge 1$; $a_0=a_{10}=0$.\\
 Applying the standard method, while keeping $a_1$ as a parameter, we get
 $$
 A(x)={a_1x-a_1x^2-2x^2\over (1-x)^3}={a_1x\over (1-x)^2}+{x(1-x)\over (1-x)^3}-{x^2+x\over (1-x)^3},
 $$
 so $a_n=(a_1+1)n-n^2$. From $a_{10}=0$ we get $a_1=9$, thus $a_n=n(10-n)$.
 
-\item 
-Another way for boundary problems (this particular example is motivated by splines, Wilf 10--11):
-\begin{itemize}
-    \item consider $au_{n+1}+bu_n+cu_{n-1}=d_n$ for $1\le n\le N-1$; $u_0=u_N=0$.
+\ruleline{Another way for boundary problems (Wilf 10--11)}
+
+\U Find $(u_n)$ if $au_{n+1}+bu_n+cu_{n-1}=d_n$ for $1\le n\le N-1$; $u_0=u_N=0$.
+\begin{itemize}[label=--]
+    \item Motivated by splines (cubic curves used e.g. to model font shapes).
     \item similar to Fibonacci with two given non-consecutive terms (but more general)
     \item define $U(x)= \sum_{j=0}^N u_jx^j$ (unknown); $D(x)=\sum_{j=1}^{N-1} d_jx^j$ (known)
     \item derive $\displaystyle a\cdot {U(x)-u_1x\over x}+bU(x)+cx(U(x)-u_{N-1}x^{N-1}) = D(x)$
@@ -198,22 +208,23 @@ Another way for boundary problems (this particular example is motivated by splin
     \item if the roots are equal, differentiate (*) to obtain the second equation
 \end{itemize}
 
-\item
-Mutually recursive sequences [Knuth 343, Example 3]
+\ruleline{GFs of two variables}
 
-\begin{itemize}
-    \item consider the number $u_n$ of tilings of $3\times n$ board with $2\times 1$ dominoes
-    \item define $v_n$ as the number of tilings of $3\times n$ board without a corner
-    \item $u_n = 2v_{n-1} + u_{n-2}$; \quad $u_0 = 1$; $u_1 = 0$
-    \item $v_n = v_{n-2} + u_{n-1}$; \quad $v_0 = 0$; $v_1 = 1$
-    \item derive $$U(x) = {1-x^2\over 1-4x^2+x^4},\qquad V(x) = {x\over 1-4x^2+x^4}$$
-    \item consider $W(z) = 1/(1-4z+z^2)$; $U(x) = (1-x^2)W(x^2)$, so $u_{2n} = w_n - w_{n-1}$
+\U Find a formula for $\displaystyle\sum_{n\ge 0} \binom{n}{k} x^n$.
 
-    \item hence $u_{2n} = {(2+\sqrt 3)^n\over 3-\sqrt 3} + {(2-\sqrt 3)^n\over 3+\sqrt 3} = \left\lceil {(2+\sqrt 3)^n\over 3-\sqrt 3}\right\rceil$
-            (derivation as a homework)
-\end{itemize}
+Introducing a new variable and changing the order of summation can help
+\begin{eqnarray}
+    \sum_{n\ge 0} {n\choose k}x^n &=& [y^k]\sum_{m\ge 0} \left(\sum_{n\ge 0} {n\choose m}x^n\right)y^m = [y^k]\sum_{n\ge 0} (1+y)^nx^n\nonumber\\
+    &=& [y^k] {1\over 1-x(1+y)} = {1\over 1-x}[y^k] {1\over 1-{x\over 1-x}y} = {x^k\over (1-x)^{k+1}}. \label{binomial}
+\end{eqnarray}
 
-\item
+Alternatively, one can use binomial theorem (Knuth 199/5.56 and 5.57):
+\begin{eqnarray*}
+    {1\over (1-x)^{n+1}} &=& (1-x)^{-n-1} =\sum_{k\ge 0} {-n-1\choose k}(-x)^k\\
+                            &=& \sum_{k\ge 0} {(-n-1)(-n-2)\dots(-n-k)\over k!}(-x)^k = \sum_{k\ge 0} {n+k\choose n}x^k.
+\end{eqnarray*}
+
+\U
 Given $f(x)\ogf (a_n)_{n\ge 0}$, express ogf for the following sequences in terms of $f$ [W1.3]:\\
 \setlength\extrarowheight{1mm}
 \begin{tabular}{cl@{\hskip 5mm}l}
@@ -228,33 +239,14 @@ Given $f(x)\ogf (a_n)_{n\ge 0}$, express ogf for the following sequences in term
     (i) & $a_0, a_2, a_4, \dots$ & \ans{$(f(\sqrt{x})+f(-\sqrt{x}))/2$}\\
 \end{tabular}
 
-\end{itemize}
-
-\newpage
-
-\ruleline{GFs of two variables}
-\begin{itemize}
-    \item introducing a new variable and changing the order of summation can help
-    \begin{eqnarray}
-        \sum_{n\ge 0} {n\choose k}x^n &=& [y^k]\sum_{m\ge 0} \left(\sum_{n\ge 0} {n\choose m}x^n\right)y^m = [y^k]\sum_{n\ge 0} (1+y)^nx^n\nonumber\\
-        &=& [y^k] {1\over 1-x(1+y)} = {1\over 1-x}[y^k] {1\over 1-{x\over 1-x}y} = {x^k\over (1-x)^{k+1}} \label{binomial}
-    \end{eqnarray}
-
-    \item alternatively, one can use binomial theorem (Knuth 199/5.56 and 5.57):
-    \begin{eqnarray*}
-        {1\over (1-z)^{n+1}} &=& (1-z)^{-n-1} =\sum_{k\ge 0} {-n-1\choose k}(-z)^k\\
-                             &=& \sum_{k\ge 0} {(-n-1)(-n-2)\dots(-n-k)\over k!}(-z)^k = \sum_{k\ge 0} {n+k\choose n}z^k
-    \end{eqnarray*}
-\end{itemize}
-
-
 \ruleline{Formal power series [Wilf chapter 2]}
+
 \begin{itemize}
     \item a ring with addition and multiplication $\sum_n a_nx^n\sum_n b_nx^n = \sum_n \sum_k (a_k b_{n-k})x^n$
     \item if $f(0)\neq 0$, then $f$ has a unique reciprocal $1/f$ such that $f\cdot 1/f = 1$
     \item composition $f(g(x))$ defined iff $g(0) = 0$ or $f$ is a polynomial (cf. $e^{e^x-1}$ vs. $e^{e^x}$)
     \item formal derivative $\D$: $\D\sum_n a_nx^n = \sum na_nx^{n-1}$; usual rules for sum, product etc.
-    \item exercise: find all $f$ such that $\D f = f$
+    \item \U Find all $f$ such that $\D f = f$.
 \end{itemize}
 
 \ruleline{Rules for manipulation [Wilf 2.1, Knuth 334]. Assume that $f\ogf (a_n)_{n=0}^\infty$.}
@@ -303,8 +295,41 @@ Given $f(x)\ogf (a_n)_{n\ge 0}$, express ogf for the following sequences in term
 \end{enumerate}
 
 
-
 \section{Skipping sequence elements, Catalan numbers}
+
+\ruleline{Every third binomial coefficient [Wilf 51, example 4]}
+\begin{itemize}
+    \item Why ${1\over 2}(A(x)+A(-x))\ogf a_0, 0, a_2, 0, a_4, \dots$ works: ${1\over 2}(1^n + (-1)^n) = [2\mid n]$.
+    \item We know that if $(a_n)\ogf A(x)$, then $(a_{2n})_{i=0}^\infty \ogf (A(\sqrt x) + A(-\sqrt x))/2$.
+    \item Let's generalize: $(a_{rk})_{k=0}^\infty \ogf A_r(x) = \frac 1r \sum_{j=0}^{r-1} A\left(\omega^j\root r \of x\right)$
+        where $\omega$ is the primitive $r$-th root of unity.
+    \item Key step in the proof: ${1\over r}\sum_{j=0}^{r-1} (\omega^j)^n = {1\over r}\sum_{j=0}^{r-1} e^{2\pi ijn/r} = [r\mid n]$\\
+        --- just a geometric progression, or a consequence of $t^r-1=(t-1)(t^{r-1}+\dots+t+1)$;
+        \begin{align*}
+            A_r(x)  = \frac 1r \sum_{j=0}^{r-1} A\left(\omega^j\root r \of x\right)
+                   &= \frac 1r \sum_{j=0}^{r-1} \sum_{n=0}^\infty a_n\left(\omega^j\root r \of x\right)^n\\
+                   &= \frac 1r \sum_{n=0}^\infty a_n x^{n/r} \sum_{j=0}^{r-1} \omega^{jn}\\
+                   &= \sum_{n=0}^\infty a_nx^{n/r} [r\mid n] = \sum_{k=0}^\infty a_{rk} x^k
+        \end{align*}
+    \item problem: find $S_n = \sum_k (-1)^k{n\choose 3k}$
+    \item if we knew $f(x) = \sum_k {n\choose 3k}x^{3k}$, we would have $S_n = f(-1)$
+    \item for $A(x) = (1+x)^n$, we have $f(x) = {1\over 3}\big(A(x) + A(x\omega^1) + A(x\omega^2)\big)$ for $\omega=e^{2\pi i/3}$
+    \item and so $S_n=f(-1) ={1\over 3}[(1-\omega)^n + (1-\omega^2)^n)] = $ $$ = {1\over 3}\left[\left({3-\sqrt3 i\over 2}\right)^n+\left({3+\sqrt3 i\over 2}\right)^n\right] = 2\cdot 3^{{n\over 2}-1}\cos\left({\pi n\over 6}\right)$$
+\end{itemize}
+
+\ruleline{Mutually recursive sequences [Knuth 343, Example 3]}
+
+\begin{itemize}
+    \item consider the number $u_n$ of tilings of $3\times n$ board with $2\times 1$ dominoes
+    \item define $v_n$ as the number of tilings of $3\times n$ board without a corner
+    \item $u_n = 2v_{n-1} + u_{n-2}$; \quad $u_0 = 1$; $u_1 = 0$
+    \item $v_n = v_{n-2} + u_{n-1}$; \quad $v_0 = 0$; $v_1 = 1$
+    \item derive $$U(x) = {1-x^2\over 1-4x^2+x^4},\qquad V(x) = {x\over 1-4x^2+x^4}$$
+    \item consider $W(z) = 1/(1-4z+z^2)$; $U(x) = (1-x^2)W(x^2)$, so $u_{2n} = w_n - w_{n-1}$
+
+    \item hence $u_{2n} = {(2+\sqrt 3)^n\over 3-\sqrt 3} + {(2-\sqrt 3)^n\over 3+\sqrt 3} = \left\lceil {(2+\sqrt 3)^n\over 3-\sqrt 3}\right\rceil$
+            (derivation as a homework)
+\end{itemize}
 
 
 \ruleline{Discovering combinatorial identities via gfs [Knuth 198, Vandermonde and 5.55]}
@@ -312,17 +337,6 @@ Given $f(x)\ogf (a_n)_{n\ge 0}$, express ogf for the following sequences in term
     \item $(1+x)^r = \sum_{k\ge 0} {r\choose k}x^k$; consider $(1+x)^r(1+x)^s = (1+x)^{r+s}$
     \item comparison of coefficients yields $\sum_{k\ge 0}^n {r\choose k}{s\choose n-k}={r+s\choose n}$ --- Vandermonde
     \item by considering $(1-x)^r(1+x)^r = (1-x^2)^r$, we obtain $$\sum_{k=0}^n {r\choose k}{r\choose n-k}(-1)^k = (-1)^{n/2}{r\choose n/2}[2\mid n]$$
-\end{itemize}
-
-\ruleline{Every third binomial coefficient [Wilf 51, example 4]}
-\begin{itemize}
-    \item why ${1\over 2}(A(x)+A(-x))\ogf a_0, 0, a_2, 0, a_4, \dots$ works: ${1\over 2}(1^n + (-1)^n) = [2\mid n]$
-    \item in general, for $\omega$ being $r$-th root of unity, ${1\over r}\sum_{j=0}^{r-1} (\omega^j)^n = {1\over r}\sum_{j=0}^{r-1} e^{2\pi ijn/r} = [r\mid n]$\\
-        --- just a geometric progression, or a consequence of $t^r-1=(t-1)(t^{r-1}+\dots+t+1)$
-    \item problem: find $S_n = \sum_k (-1)^k{n\choose 3k}$
-    \item if we knew $f(x) = \sum_k {n\choose 3k}x^{3k}$, we would have $S_n = f(-1)$
-    \item for $A(x) = (1+x)^n$, we have $f(x) = {1\over 3}\big(A(x) + A(x\omega^1) + A(x\omega^2)\big)$ for $\omega=e^{2\pi i/3}$
-    \item and so $S_n=f(-1) ={1\over 3}[(1-\omega)^n + (1-\omega^2)^n)] = $ $$ = {1\over 3}\left[\left({3-\sqrt3 i\over 2}\right)^n+\left({3+\sqrt3 i\over 2}\right)^n\right] = 2\cdot 3^{{n\over 2}-1}\cos\left({\pi n\over 6}\right)$$
 \end{itemize}
 
 \ruleline{Catalan numbers [Knuth 357, example 4]}
@@ -375,59 +389,52 @@ Given $f(x)\ogf (a_n)_{n\ge 0}$, express ogf for the following sequences in term
     % TODO \item samplesort Knuth 354 ex. 2: convolution...
 \end{enumerate}
 
-\newpage
-
-
 
 \section{Snake Oil}
 
 The Snake Oil method [Wilf 118, chapter 4.3] -- external method vs. internal manipulations within a sum.
 
 \begin{enumerate}
-    \item identify the free variable and give the name to the sum, e.g. $f(n)$
-    \item let $F(x) = \sum f(n)x^n$
+    \item identify the free variable and give the name to the sum, e.g. $s_n$
+    \item let $S(x) = \sum s_n x^n$
     \item interchange the order of summation; solve the inner sum in closed form
-    \item find coefficients of $F(x)$
+    \item find coefficients of $S(x)$
 \end{enumerate}
 
-\begin{itemize}
-\item
-Example 0
-\begin{itemize}
-    \item let's evaluate $f(n) = \sum_k {n\choose k}$; after Step 2, $F(x) = \sum_{n\ge 0} x^n \sum_k {n\choose k}$
-    \item $\displaystyle F(x) = \sum_k \sum_n {n\choose k}x^n = \sum_{k\ge 0} {x^k\over (1-x)^{k+1}}={1\over 1-x}\cdot {1\over 1-{x\over 1-x}}={1\over 1-2x}$
-\end{itemize}
+\U Evaluate $s_n = \sum_k {n\choose k}$.
 
-\item
-Example 1 [Wilf 121]
-\begin{itemize}
-    \item let's evaluate $f(n) = \sum_{k\ge 0} {k\choose n-k}$; after Step 2, $F(x) = \sum_n x^n \sum_{k\ge 0} {k\choose n-k}$
-    \item $\displaystyle F(x) = \sum_{k\ge 0} \sum_n {k\choose n-k}x^n = \sum_{k\ge 0}x^k\sum_n {k\choose n-k}x^{n-k} = \sum_{k\ge 0}x^k (1+x)^k = {1\over 1-x-x^2}$
-    \item so $f(n) = F_{n+1}$
-\end{itemize}
+After Step 2, $S(x) = \sum_{n\ge 0} x^n \sum_k {n\choose k}$.
+$$
+    S(x) = \sum_k \sum_n {n\choose k}x^n = \sum_{k\ge 0} {x^k\over (1-x)^{k+1}}
+        = {1\over 1-x}\cdot {1\over 1-{x\over 1-x}}={1\over 1-2x}
+$$
 
-\item
-Example 2 [Wilf 122]
-\begin{itemize}
-    \item let's evaluate $f(n) = \sum_{k} {n+k\choose m+2k}{2k\choose k}{(-1)^k\over k+1}$, where $m$, $n$ are nonnegative integers
-        \begin{eqnarray*}
-        F(x) &=& \sum_{n\ge 0} x^n \sum_{k} {n+k\choose m+2k}{2k\choose k}{(-1)^k\over k+1} \\
-             &=& \sum_k {2k\choose k}{(-1)^k\over k+1}x^{-k}\sum_{n\ge 0}{n+k\choose m+2k}x^{n+k}\\
-             &=& \sum_k {2k\choose k}{(-1)^k\over k+1}x^{-k}{x^{m+2k}\over (1-x)^{m+2k+1}}\\
-             &=& {x^m\over (1-x)^{m+1}}\sum_k {2k\choose k}{1\over k+1}\left({-x\over (1-x)^2}\right)^k \\
-             &=& {-x^{m-1}\over 2(1-x)^{m-1}}\left(1-\sqrt{1+{4x\over (1-x)^2}}\right) = {x^m\over (1-x)^m}
-        \end{eqnarray*}
-    \item so $f(n) = {n-1\choose m-1}$
-\end{itemize}
+\U Evaluate $s_n = \sum_{k\ge 0} {k\choose n-k}$ [Wilf 121].
 
-\item
-Example 6 [Wilf 127]
-\begin{itemize}
-    \item prove that $\sum_{k} {m\choose k}{n+k\choose m} = \sum_k {m\choose k}{n\choose k}2^k$, where $m$, $n$ are nonnegative integers
-    \item the ogf of the left-hand side is
-        $$L(x) = \sum_{k} {m\choose k} x^{-k}\sum_{n\ge 0}{n+k\choose m}x^{n+k} ={(1+x)^m\over (1-x)^{m+1}}$$
-    \item we get the same for the right-hand side
-\end{itemize}
+After Step 2, $S(x) = \sum_n x^n \sum_{k\ge 0} {k\choose n-k}$
+$$
+    S(x) = \sum_{k\ge 0} \sum_n {k\choose n-k}x^n =
+        \sum_{k\ge 0}x^k\sum_n {k\choose n-k}x^{n-k} = \sum_{k\ge 0}x^k (1+x)^k = {1\over 1-x-x^2}
+$$
+thus $s_n = F_{n+1}$.
+
+\U Evaluate $s_n = \sum_{k} {n+k\choose m+2k}{2k\choose k}{(-1)^k\over k+1}$, where $m, n\in \Z_0^{+}$ [Wilf 122].
+
+\begin{eqnarray*}
+S(x) &=& \sum_{n\ge 0} x^n \sum_{k} {n+k\choose m+2k}{2k\choose k}{(-1)^k\over k+1} \\
+        &=& \sum_k {2k\choose k}{(-1)^k\over k+1}x^{-k}\sum_{n\ge 0}{n+k\choose m+2k}x^{n+k}\\
+        &=& \sum_k {2k\choose k}{(-1)^k\over k+1}x^{-k}{x^{m+2k}\over (1-x)^{m+2k+1}}\\
+        &=& {x^m\over (1-x)^{m+1}}\sum_k {2k\choose k}{1\over k+1}\left({-x\over (1-x)^2}\right)^k \\
+        &=& {-x^{m-1}\over 2(1-x)^{m-1}}\left(1-\sqrt{1+{4x\over (1-x)^2}}\right) = {x^m\over (1-x)^m},
+\end{eqnarray*}
+thus $s_n = {n-1\choose m-1}$.
+
+\U Prove that $\sum_{k} {m\choose k}{n+k\choose m} = \sum_k {m\choose k}{n\choose k}2^k$, where $m, n\in \Z_0^{+}$. [Wilf 127]
+The ogf of the left-hand side is
+$$
+    L(x) = \sum_{k} {m\choose k} x^{-k}\sum_{n\ge 0}{n+k\choose m}x^{n+k} ={(1+x)^m\over (1-x)^{m+1}}.
+$$
+We get the same for the right-hand side
 
 %\item 
 %Introducing additional free variable [W4.13]
@@ -436,9 +443,6 @@ Example 6 [Wilf 127]
 %    \item We evaluate $\sum_k (-1)^k{n\choose k}{n\choose n-m+k}$ by multiplying by $x^m$ etc. % todo?
 %\end{itemize}
 
-\end{itemize}
-
-\newpage
 
 \ruleline{Exercises}
 \begin{enumerate}
@@ -454,14 +458,12 @@ Example 6 [Wilf 127]
             \ans{$F(x)=1/(1-xy+x^2)$}
     \item Evaluate $\displaystyle f(n)=\sum_{k} {2n+1\choose 2p+2k+1}{p+k\choose k}$. [W4.11(c)]\\[2mm]
             \ans{replace $2n+1$ by $m$ and solve for $f(m)={m-p-1\choose p}2^{m-2p-1}$;  $f(2n+1)={2n-p\choose p}4^{n-p}$;\\[2mm]
-                    $\displaystyle F(x) = {x\over (1-x)^2}\sum_{k\ge 0} {p+k\choose p} \left({x\over 1-x}\right)^{2(p+k)}
-                    ={x^{p+1}\over 2^p}\cdot {(2x)^p\over (1-2x)^{p+1}}$}
+                $\displaystyle F(x) = {x\over (1-x)^2}\sum_{k\ge 0} {p+k\choose p} \left({x\over 1-x}\right)^{2(p+k)}
+                = {x^{p+1}\over 2^p}\cdot {(2x)^p\over (1-2x)^{p+1}}$}
     \item Try to prove that $\sum_k {n\choose k}{2n\choose n+k}={3n\choose n}$ via the snake oil method in three different ways: consider the sum
             $$\sum_k {n\choose k}{m\choose r-k}$$
             and the free variable being one of $n$, $m$, $r$.
-
 \end{enumerate}
-
 
 
 \newpage
