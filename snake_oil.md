@@ -1,6 +1,6 @@
 # Exercises: snake oil
 
-1. Prove that $\sum_k k{n\choose k} = n2^{n-1}$ via the snake oil method.
+1. Prove that $\sum_k k{n\choose k} = n\cdot 2^{n-1}$ via the snake oil method.
 
     <details>
     <summary>solution</summary>
