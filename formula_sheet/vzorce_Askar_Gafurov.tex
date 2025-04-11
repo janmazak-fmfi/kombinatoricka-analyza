@@ -1,0 +1,51 @@
+\documentclass[10pt, twocolumn]{article}
+\usepackage{geometry}
+\geometry{
+  left=10mm,
+  right=10mm,
+  top=15mm,
+  bottom=15mm
+}
+
+\usepackage{dsfont}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{enumerate}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{parskip} %% ziadne odstupy
+\usepackage{hyperref}
+
+\allowdisplaybreaks
+
+\usepackage[compact]{titlesec} %% custom headings, compact style
+
+%\titleformat{<command>}[<shape>]{<format>}{<label>}{<sep>}{<before-code>}[<after-code>]
+%\titlespacing{<command>}{<left>}{<before-sep>}{<after-sep>}
+\titleformat{\section}{\normalfont\large\bfseries\uppercase}{$\bigstar$~}{0pt}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{$\clubsuit$~}{0pt}{}
+
+ 
+\title{Cheatsheet for Kombat(1), part 2 and 3}
+\author{Askar~Gafurov}
+
+%% macros {{{
+\def\seq#1{\left\lbrace#1\right\rbrace}
+\def\nseq#1{\seq{#1}_{n\geq 0}}
+\def\defarrow{\overset{\text{def}}{\Longleftrightarrow}}
+\def\ogf{\overset{ogf}{\longleftrightarrow}}
+\def\nthroot#1#2{\sqrt[\leftroot{2}\uproot{2}\scriptstyle {#1}]{#2}}
+%% }}}
+
+\begin{document}
+
+\input{gen_func.tex}
+\input{asymptotics.tex}
+
+\hrulefill
+
+source: \url{https://github.com/japdlsd/kombat1_cheatsheet}
+
+\end{document}
